@@ -101,8 +101,8 @@ def eliza():
     print("Good day to you.")
 
     while still_going:
-        # preprocessed_input = preprocess(input(">").lower())
-        preprocessed_input = preprocess("Shane is sorry to hurt your feelings".lower())
+        # user_input = preprocess(input(">").lower())
+        preprocessed_input = preprocess("Shane asks who are you?".lower())
 
         for bye in goodbye_list:
             if bye == preprocessed_input:
@@ -120,12 +120,9 @@ def eliza():
 
 def preprocess(user_input):
     """Remove special characters from input"""
-    user_input = user_input.split()
-    for e in user_input:
-        for s_char in special_chars:
-            if s_char is e:
-                user_input.remove(s_char)
-    return ' '.join(user_input)
+    for sp_char in special_chars:
+        results = user_input.replace(sp_char, "")
+    return results
 
 
 def conjugate(user_input):
@@ -148,10 +145,28 @@ def keyword(user_input):
     index_number = 0
     temp_keyword = None
 
+    # Single keyword search
+    for word in user_list:
+        for key in keywords:
+            if word == key:
+                temp_keyword = word
 
+    # Reverse list order; pop till keyword is reached then grab index
+    user_list.reverse()
+    for word in user_list:
+        if word is temp_keyword:
+            index_number = user_list.index(word)
+            user_list.pop()
+            break
+        else:
+            user_list.pop()
+    user_list.reverse()
+
+    # Two keyword search
 
     if temp_keyword is None:
         index_number = -1
+
     return (str(index_number) + " " + " ".join(user_list))
 
 

@@ -3,6 +3,9 @@ Shane Driskell
 Create Eliza: A Primitive Chat Bot
 """
 
+import random
+
+
 # SETUP OF LISTS/DICTS FOR KEYWORDS AND RESPONSES
 goodbye_list = ["goodbye", "bye", "farewell", "later", "adios"]
 
@@ -95,29 +98,6 @@ response_dict = {
     }
 
 
-# APPLICATION
-def eliza():
-    still_going = True
-    print("Good day to you.")
-
-    while still_going:
-        # user_input = preprocess(input(">").lower())
-        preprocessed_input = preprocess("I'm asking who are you?".lower())
-        print(preprocessed_input)
-        for bye in goodbye_list:
-            if bye == preprocessed_input:
-                still_going = False
-
-        keyword_input = keyword(preprocessed_input)
-        print(keyword_input)
-        conjugated_input = conjugate(keyword_input)
-        print(conjugated_input)
-        # REMOVE WHEN DONE TESTING
-        still_going = False
-
-    print("Goodbye, jerk-face.")
-
-
 def preprocess(user_input):
     """Remove special characters from input"""
     preprocess_input = ""
@@ -144,38 +124,56 @@ def conjugate(user_input):
 
 def keyword(user_input):
     """Identify keyword and remove it and left-hand text from input"""
-    user_list = user_input.split()
-    index_number = 0
-    temp_keyword = None
+    for key in keywords:
+        if key in user_input:
+            keyword_index = keywords.index(key)
+            start = user_input.find(key)
+            end = start + len(key)
+            results = str(keyword_index) + " " + user_input[end:]
+            return results
 
-    # Single keyword search
-    for word in user_list:
-        for key in keywords:
-            if word == key:
-                temp_keyword = word
-
-    # Reverse list order; pop till keyword is reached then grab index
-    user_list.reverse()
-    for word in user_list:
-        if word is temp_keyword:
-            index_number = user_list.index(word)
-            user_list.pop()
-            break
-        else:
-            user_list.pop()
-    user_list.reverse()
-
-    # Two keyword search
-
-    if temp_keyword is None:
-        index_number = -1
-
-    return (str(index_number) + " " + " ".join(user_list))
+    index_number = -1
+    return str(index_number) + " " + " ".join(user_input)
+    # Thanks to my friend snowk11235 @github for helping me with this
 
 
-def build_reply(keyword_index):
+def get_reply(user_input):
     """Generate the response back to user."""
+    keyword_index = user_input.split()[0]
+    reply_list = []
+
+    reply_list = response_dict.get(int(keyword_index))
+    random_reply = random.randint(0, len(reply_list))
+    reply = reply_list[random_reply]
+
+    return reply
+
+
+def build_reply():
+    """Build a reply that takes get_reply results and provides a response to user"""
     pass
+
+
+def eliza():
+    """Run process to simulate a simple chat bot"""
+    still_going = True
+    print("Good day to you.")
+
+    while still_going:
+        # preprocessed_input = preprocess(input(">").lower())
+        preprocessed_input = preprocess("I am sorry that you're wonderful to my eyes.".lower())
+
+        for bye in goodbye_list:
+            if bye == preprocessed_input:
+                still_going = False
+
+        keyword_input = keyword(preprocessed_input)
+        conjugated_input = conjugate(keyword_input)
+        reply = get_reply(conjugated_input)
+
+        # REMOVE WHEN DONE TESTING
+        still_going = False
+    print("Goodbye, jerk-face.")
 
 
 if __name__ == "__main__":

@@ -156,7 +156,7 @@ def build_reply(user_input, reply):
         if char == '''*''':
             reply = reply.replace('''*''', user_input)
             reply = reply + "?"
-    print(reply)
+    return reply
 
 
 def eliza():
@@ -176,12 +176,7 @@ def eliza():
 
         reply = get_reply(conjugated_input)
         results = build_reply(conjugated_input, reply)
-
-
         print(results)
-
-        # REMOVE WHEN DONE TESTING
-        # still_going = False
     print("Goodbye, jerk-face.")
 
 

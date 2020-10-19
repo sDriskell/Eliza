@@ -144,14 +144,19 @@ def get_reply(user_input):
 
     reply_list = response_dict.get(int(keyword_index))
     random_reply = random.randint(0, len(reply_list))
-    reply = reply_list[random_reply]
+    reply = reply_list[random_reply-1]
 
     return reply
 
 
-def build_reply():
+def build_reply(user_input, reply):
     """Build a reply that takes get_reply results and provides a response to user"""
-    pass
+    user_input = user_input[2:]
+    for char in reply:
+        if char == '''*''':
+            reply = reply.replace('''*''', user_input)
+            reply = reply + "?"
+    print(reply)
 
 
 def eliza():
@@ -160,8 +165,7 @@ def eliza():
     print("Good day to you.")
 
     while still_going:
-        # preprocessed_input = preprocess(input(">").lower())
-        preprocessed_input = preprocess("I am sorry that you're wonderful to my eyes.".lower())
+        preprocessed_input = preprocess(input(">").lower())
 
         for bye in goodbye_list:
             if bye == preprocessed_input:
@@ -169,10 +173,15 @@ def eliza():
 
         keyword_input = keyword(preprocessed_input)
         conjugated_input = conjugate(keyword_input)
+
         reply = get_reply(conjugated_input)
+        results = build_reply(conjugated_input, reply)
+
+
+        print(results)
 
         # REMOVE WHEN DONE TESTING
-        still_going = False
+        # still_going = False
     print("Goodbye, jerk-face.")
 
 

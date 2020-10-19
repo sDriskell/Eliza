@@ -134,7 +134,7 @@ def keyword(user_input):
 
     index_number = -1
     return str(index_number) + " " + " ".join(user_input)
-    # Thanks to my friend snowk11235 @github for helping me with this
+    # Thanks to my friend snowk11235 @github for letting me use this
 
 
 def get_reply(user_input):

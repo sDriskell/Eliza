@@ -11,7 +11,7 @@ keywords = ["can you", "can i", "you are", "youre", "i dont", "i feel", "why don
             "why", "name", "cause", "sorry", "dream", "hello", "hi ", "maybe", "no", "your", "always",
             "think", "alike", "yes", "friend", "computer"]
 
-special_chars = [".", "'", ";", "!", ",", "?"]
+special_chars = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
 
 conjugate_dict = {"are":"am", "am":"are", "were":"was", "was":"were", "you":"i", "i":"you", "your":"my",
                   "my":"your", "ive":"you've", "youve":"ive", "im":"you're", "youre":"I'm", "me":"you"}
@@ -102,8 +102,8 @@ def eliza():
 
     while still_going:
         # user_input = preprocess(input(">").lower())
-        preprocessed_input = preprocess("Shane asks who are you?".lower())
-
+        preprocessed_input = preprocess("I'm asking who are you?".lower())
+        print(preprocessed_input)
         for bye in goodbye_list:
             if bye == preprocessed_input:
                 still_going = False
@@ -120,9 +120,12 @@ def eliza():
 
 def preprocess(user_input):
     """Remove special characters from input"""
-    for sp_char in special_chars:
-        results = user_input.replace(sp_char, "")
-    return results
+    preprocess_input = ""
+    for char in user_input:
+        if char not in special_chars:
+            preprocess_input = preprocess_input + char
+    return preprocess_input
+    # https://pythonguides.com/remove-character-from-string-python/
 
 
 def conjugate(user_input):

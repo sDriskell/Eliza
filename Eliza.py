@@ -133,7 +133,7 @@ def keyword(user_input):
             user_input_index = user_input.index(key)
             break
 
-    return str(keyword_index) + " " + user_input[:user_input_index]
+    return str(keyword_index) + " " + user_input[user_input_index:]
 
 
 def get_reply(user_input):

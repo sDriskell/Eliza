@@ -171,12 +171,11 @@ def eliza():
                 still_going = False
 
         keyword_input = keyword(preprocessed_input)
-
         conjugated_input = conjugate(keyword_input)
-
         reply = get_reply(conjugated_input)
         results = build_reply(conjugated_input, reply)
         print(results)
+
     print("Goodbye, jerk-face.")
 
 

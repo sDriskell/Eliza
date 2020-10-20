@@ -124,17 +124,16 @@ def conjugate(user_input):
 
 def keyword(user_input):
     """Identify keyword and remove it and left-hand text from input"""
-    for key in keywords:
-        if key in user_input:
-            keyword_index = keywords.index(key)
-            start = user_input.find(key)
-            end = start + len(key)
-            results = str(keyword_index) + " " + user_input[end:]
-            return results
+    user_input_index = 0
+    keyword_index = -1
 
-    index_number = -1
-    return str(index_number) + " " + " ".join(user_input)
-    # Thanks to my friend snowk11235 @github for letting me use this
+    for key in keywords:
+        if user_input.rfind(key) != -1:
+            keyword_index = keywords.index(key)
+            user_input_index = user_input.index(key)
+            break
+
+    return str(keyword_index) + " " + user_input[:user_input_index]
 
 
 def get_reply(user_input):
@@ -172,6 +171,7 @@ def eliza():
                 still_going = False
 
         keyword_input = keyword(preprocessed_input)
+
         conjugated_input = conjugate(keyword_input)
 
         reply = get_reply(conjugated_input)
